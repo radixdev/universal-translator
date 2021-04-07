@@ -4,6 +4,8 @@ require 'csv'
 require 'fileutils'
 require_relative 'lif'
 
+HANDOFF_DIRECTORY = "untranslated_sheets"
+
 class LifToCsvConverter
   attr_accessor :output_codes
   attr_accessor :input_lifs
@@ -25,10 +27,10 @@ class LifToCsvConverter
       }
     end
 
-    unless Dir.exist?("untranslated_sheets")
-      FileUtils.mkdir("untranslated_sheets")
+    unless Dir.exist?(HANDOFF_DIRECTORY)
+      FileUtils.mkdir(HANDOFF_DIRECTORY)
     end
-    File.write("untranslated_sheets/input_sheet_1.csv", data)
+    File.write("#{HANDOFF_DIRECTORY}/input_sheet_1.csv", data)
   end
 end
 
