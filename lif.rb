@@ -13,4 +13,8 @@ class LanguageIntermediateFormat
     @value = value
     @language_code = language_code
   end
+
+  def to_s
+    "#{language_code} #{key} \"#{value}\""
+  end
 end

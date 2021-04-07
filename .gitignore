@@ -1,3 +1,6 @@
+translated_sheets/
+untranslated_sheets/
+
 *.gem
 *.rbc
 /.config
