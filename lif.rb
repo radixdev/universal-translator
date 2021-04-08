@@ -7,11 +7,21 @@
 class LanguageIntermediateFormat
   attr_accessor :key, :value
   attr_accessor :language_code
+  attr_accessor :locale, :region
 
   def initialize(key, value, language_code)
     @key = key
     @value = value
     @language_code = language_code
+
+    # Parse the language code
+    if @language_code.include?("-")
+      # en-US
+      @locale, @region = @language_code.match(/(\w{2})-(\w{2})/).captures
+    else 
+      @locale = @language_code
+      @region = nil
+    end
   end
 
   # Turn \n into something nice
@@ -25,7 +35,17 @@ class LanguageIntermediateFormat
     @value = @value.gsub(/[ ]+🎮[ ]+/, "\\n")
   end
 
+  def has_region?
+    return !@region.nil?
+  end
+
   def to_s
     "#{language_code} #{key} \"#{value}\""
   end
 end
+
+# lif1 = LanguageIntermediateFormat.new("key1", "hello world", "en")
+# lif2 = LanguageIntermediateFormat.new("key1", "hello world", "en-US")
+
+# puts lif1.locale, lif1.region, lif1.has_region?
+# puts lif2.locale, lif2.region, lif2.has_region?

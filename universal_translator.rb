@@ -11,7 +11,7 @@ def generate_sheets(layer, directory)
   puts "Using layer type #{layer} and directory #{directory}"
 
   output_codes = get_gtranslate_codes_from_config()
-  lifs = layer.get_sheet_generation_data(directory)
+  lifs = layer.get_generation_data(directory)
 
   puts "Desired language codes #{output_codes}"
   forward_converter = LifToCsvConverter.new(output_codes, lifs)
