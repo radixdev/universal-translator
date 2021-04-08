@@ -24,7 +24,7 @@ def apply_translations(layer, directory)
 
   backwards_converter = CsvToLifConverter.new()
   translated_lifs = backwards_converter.read_translated_sheets()
-  puts translated_lifs
+  layer.apply_translations(translated_lifs)
 end
 
 private

@@ -5,6 +5,8 @@ require_relative '../base_layer'
 require_relative '../lif'
 
 class AndroidStringsLayer < BaseLayer
+  # @param [String] Directory of our source material
+  # @return [Array] the generated LIF array
   def get_generation_data(input_dir)
     # Get the "en" LIFs
     strings_en_file = File.join(input_dir, "values/strings.xml")
@@ -22,5 +24,10 @@ class AndroidStringsLayer < BaseLayer
     end
 
     return lifs
+  end
+
+  # @param [Array] Array of the translated LIFs to apply
+  def apply_translations(lifs)
+    raise 'not implemented'
   end
 end
