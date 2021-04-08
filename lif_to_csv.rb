@@ -34,9 +34,9 @@ class LifToCsvConverter
   end
 end
 
-output_codes = ["fr", "es", "ja"]
-lif1 = LanguageIntermediateFormat.new("key1", "hello world", "en")
-lif2 = LanguageIntermediateFormat.new("key2", "banana stand", "en")
+# output_codes = ["fr", "es", "ja"]
+# lif1 = LanguageIntermediateFormat.new("key1", "hello world", "en")
+# lif2 = LanguageIntermediateFormat.new("key2", "banana stand", "en")
 
-forward_converter = LifToCsvConverter.new(output_codes, [lif1, lif2])
-forward_converter.generate()
+# forward_converter = LifToCsvConverter.new(output_codes, [lif1, lif2])
+# forward_converter.generate()

@@ -38,5 +38,5 @@ class CsvToLifConverter
   end
 end
 
-backward_converter = CsvToLifConverter.new()
-puts backward_converter.read_input_sheets()
+# backward_converter = CsvToLifConverter.new()
+# puts backward_converter.read_input_sheets()
