@@ -2,6 +2,7 @@ translated_sheets/
 untranslated_sheets/
 config.json
 
+.DS_Store
 *.gem
 *.rbc
 /.config
