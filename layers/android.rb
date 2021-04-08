@@ -21,6 +21,6 @@ class AndroidStringsLayer < BaseLayer
       lifs << LanguageIntermediateFormat.new(key, value, "en")
     end
 
-    return [], lifs
+    return lifs
   end
 end
