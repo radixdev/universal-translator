@@ -16,9 +16,9 @@ class AndroidStringsLayer < BaseLayer
         next
       end
 
-      key = item["name"]
-      value = item.content
-      lifs << LanguageIntermediateFormat.new(key, value, "en")
+      lif = LanguageIntermediateFormat.new(item["name"], item.content, "en")
+      lif.do_forwards_sanitization()
+      lifs << lif
     end
 
     return lifs

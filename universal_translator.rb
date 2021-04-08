@@ -19,6 +19,14 @@ def generate_sheets(layer, directory)
   puts "generated CSV!"
 end
 
+def apply_translations(layer, directory)
+  puts "Using layer type #{layer} and directory #{directory}"
+
+  backwards_converter = CsvToLifConverter.new()
+  translated_lifs = backwards_converter.read_translated_sheets()
+  puts translated_lifs
+end
+
 private
 
 def get_gtranslate_codes_from_config
@@ -41,6 +49,9 @@ case ARGV[0]
 when "-generate-android"
   android_directory = CONFIG["layers"]["android"]["path"]
   generate_sheets(AndroidStringsLayer.new(), android_directory)
+when "-apply-android"
+  android_directory = CONFIG["layers"]["android"]["path"]
+  apply_translations(AndroidStringsLayer.new(), android_directory)
 else
-  puts "unknown first argument :("
+  puts "unknown first argument :( #{ARGV[0]}"
 end
