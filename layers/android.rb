@@ -78,6 +78,10 @@ class AndroidStringsLayer < BaseLayer
       if !File.directory?(path) || file.include?("dpi") || !file.include?("values-")
         next
       end
+      # Check if a strings file exists there
+      if !File.file?(File.join(path, "strings.xml"))
+        next
+      end
 
       match = file.match(/values-(\D{2})(-r(\D{2}))?/)
       if match.nil?

@@ -28,8 +28,7 @@ class CsvToLifConverter
         if lif_code.nil?
           break
         end
-        # The Enterprise needs no translation
-        if lif_code == "en"
+        if lif_code == "en" || item == BAD_VALUE
           next
         end
         lif = LanguageIntermediateFormat.new(lif_key, item, lif_code)
