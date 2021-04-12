@@ -18,7 +18,12 @@ Create a root level `config.json` file:
   }
 ```
 
-## Google Sheet 
+### Getting Existing Android configuration
+`bundle exec ruby universal_translator.rb -read-existing-android`
+
+This will print out the existing language translations for the project.
+
+## Google Sheets
 
 1. Import the `input_sheet_1.csv` into a blank sheets page.
 2. Paste this formula in the empty cells to force a translation.

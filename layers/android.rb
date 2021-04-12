@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'nokogiri'
+require 'json'
 require_relative '../base_layer'
 require_relative '../lif'
 
@@ -62,6 +63,56 @@ class AndroidStringsLayer < BaseLayer
     # Get rid of any errant spaces surrouding the newline delimiter
     lif.value = lif.value.gsub(/[ ]+🎮[ ]+/, "\\n")
     lif.value = lif.value.gsub("'", "\\\\'")
+  end
+
+  def read_existing_locales(directory)
+    # Get every directory that looks like a 
+    # locale and has a "strings.xml" file in it
+
+    locales = []
+    Dir.foreach(directory) do |file|
+      path = File.join(directory, file)
+      if (file == '.' || file == '..' || file == '.DS_Store')
+        next
+      end
+      if !File.directory?(path) || file.include?("dpi") || !file.include?("values-")
+        next
+      end
+
+      match = file.match(/values-(\D{2})(-r(\D{2}))?/)
+      if match.nil?
+        next
+      end
+
+      language_code, _, region = match.captures
+      if language_code.nil?
+        puts "somehow got nil language code for #{file}"
+        next
+      end
+
+      if region.nil?
+        # just the language
+        locales << language_code
+      else
+        locales << {"lang" => language_code, "region" => region}
+      end
+    end
+
+    locales = locales.sort do |a, b|
+      if a.is_a?(Hash)
+        a_val = a["lang"] + a["region"]
+      else 
+        a_val = a
+      end
+      if b.is_a?(Hash)
+        b_val = b["lang"] + b["region"]
+      else 
+        b_val = b
+      end
+
+      a_val <=> b_val
+    end
+    puts JSON.pretty_generate(locales)
   end
 
   private

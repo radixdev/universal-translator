@@ -27,6 +27,11 @@ def apply_translations(layer, directory)
   layer.apply_translations(directory, translated_lifs)
 end
 
+def read_existing_locales(layer, directory)
+  puts "Using layer type #{layer} and directory #{directory}"
+  layer.read_existing_locales(directory)
+end
+
 private
 
 def get_gtranslate_codes_from_config
@@ -52,6 +57,9 @@ when "-generate-android"
 when "-apply-android"
   android_directory = CONFIG["layers"]["android"]["path"]
   apply_translations(AndroidStringsLayer.new(), android_directory)
+when "-read-existing-android"
+  android_directory = CONFIG["layers"]["android"]["path"]
+  read_existing_locales(AndroidStringsLayer.new(), android_directory)
 else
   puts "unknown first argument :( #{ARGV[0]}"
 end
