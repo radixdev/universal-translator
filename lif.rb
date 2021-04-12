@@ -9,6 +9,7 @@ class LanguageIntermediateFormat
   attr_accessor :language_code
   attr_accessor :locale, :region
 
+  # TODO language_code is actually the "locale"
   def initialize(key, value, language_code)
     @key = key
     @value = value
@@ -40,7 +41,7 @@ class LanguageIntermediateFormat
   end
 
   def to_s
-    "#{language_code} #{key} \"#{value}\""
+    "#{language_code} \t#{key}\t\t \"#{value}\""
   end
 end
 

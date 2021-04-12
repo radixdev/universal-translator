@@ -8,7 +8,7 @@ class BaseLayer
   end
 
   # @param [Array] Array of the translated LIFs to apply
-  def apply_translations(lifs)
+  def apply_translations(directory, lifs)
     raise 'not implemented'
   end
 end
