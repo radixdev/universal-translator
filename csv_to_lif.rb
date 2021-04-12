@@ -9,7 +9,7 @@ BAD_VALUE = "#VALUE!"
 
 class CsvToLifConverter
   # Returns a list of LIFs
-  def read_translated_sheets
+  def read_translated_sheets(layer)
     # TODO read all files in this directory 
     table = CSV.parse(File.read("#{OUTPUT_DIRECTORY}/output_sheet_1.csv"), headers: false)
     lifs = []
@@ -33,7 +33,7 @@ class CsvToLifConverter
           next
         end
         lif = LanguageIntermediateFormat.new(lif_key, item, lif_code)
-        lif.do_backwards_sanitization()
+        layer.prepare_lif_for_writeback(lif)
         lifs << lif
       end
 

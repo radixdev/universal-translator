@@ -25,17 +25,6 @@ class LanguageIntermediateFormat
     end
   end
 
-  # Turn \n into something nice
-  def do_forwards_sanitization
-    @value = @value.gsub("\\n", " 🎮 ")
-  end
-
-  # Turn something nice into \n
-  def do_backwards_sanitization
-    # Get rid of any errant spaces surrouding the delimiter
-    @value = @value.gsub(/[ ]+🎮[ ]+/, "\\n")
-  end
-
   def has_region?
     return !@region.nil?
   end

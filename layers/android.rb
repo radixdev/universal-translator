@@ -17,7 +17,8 @@ class AndroidStringsLayer < BaseLayer
       end
 
       lif = LanguageIntermediateFormat.new(item["name"], item.content, "en")
-      lif.do_forwards_sanitization()
+      # lif.do_forwards_sanitization()
+      prepare_lif_for_translation(lif)
       lifs << lif
     end
 
@@ -52,6 +53,17 @@ class AndroidStringsLayer < BaseLayer
     end
   end
 
+  def prepare_lif_for_translation(lif)
+    lif.value = lif.value.gsub("\\n", " 🎮 ")
+    lif.value = lif.value.gsub("\\'", "'")
+  end
+
+  def prepare_lif_for_writeback(lif)
+    # Get rid of any errant spaces surrouding the newline delimiter
+    lif.value = lif.value.gsub(/[ ]+🎮[ ]+/, "\\n")
+    lif.value = lif.value.gsub("'", "\\\\'")
+  end
+
   private
 
   def update_xml_document(file, lifs, doc)
@@ -73,7 +85,8 @@ class AndroidStringsLayer < BaseLayer
       end
     end
     resources.add_child("\n")
-    File.write(file, doc)
+    # Remove any extra newlines
+    File.write(file, doc.to_s.gsub(/\n*\n/, "\n"))
   end
 
   def get_strings_relative_path_from_locale(language, region)

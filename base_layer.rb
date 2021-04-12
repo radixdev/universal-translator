@@ -11,4 +11,12 @@ class BaseLayer
   def apply_translations(directory, lifs)
     raise 'not implemented'
   end
+
+  def prepare_lif_for_translation(lif)
+    raise 'not implemented'
+  end
+
+  def prepare_lif_for_writeback(lif)
+    raise 'not implemented'
+  end
 end

@@ -23,7 +23,7 @@ def apply_translations(layer, directory)
   puts "Using layer type #{layer} and directory #{directory}"
 
   backwards_converter = CsvToLifConverter.new()
-  translated_lifs = backwards_converter.read_translated_sheets()
+  translated_lifs = backwards_converter.read_translated_sheets(layer)
   layer.apply_translations(directory, translated_lifs)
 end
 
