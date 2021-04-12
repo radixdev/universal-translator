@@ -38,11 +38,10 @@ class AndroidStringsLayer < BaseLayer
       language = lifs_by_code[0].locale
       region = lifs_by_code[0].region
       strings_file = File.join(directory, get_strings_relative_path_from_locale(language, region))
-      puts strings_file
-      puts lifs_by_code
 
       if File.file?(strings_file)
-        puts "file already exists"
+        puts "updating existing #{strings_file}"
+        update_existing_file(strings_file, lifs_by_code)
       else
         puts "creating new strings file #{strings_file}"
       end
@@ -50,6 +49,20 @@ class AndroidStringsLayer < BaseLayer
   end
 
   private
+
+  def update_existing_file(file, lifs)
+    doc = File.open(file) { |f| Nokogiri::XML(f) }
+    resources = doc.at_css('resources')
+
+    lifs.each do |item|
+      new_string = Nokogiri::XML::Node.new("string", doc)
+      new_string.content = item.value
+      new_string["name"] = item.key
+      resources.add_child("\n  #{new_string.to_xml}")
+    end
+    resources.add_child("\n")
+    puts doc
+  end
 
   def get_strings_relative_path_from_locale(language, region)
     if !region.nil?
