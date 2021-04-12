@@ -58,10 +58,19 @@ class AndroidStringsLayer < BaseLayer
       new_string = Nokogiri::XML::Node.new("string", doc)
       new_string.content = item.value
       new_string["name"] = item.key
-      resources.add_child("\n  #{new_string.to_xml}")
+
+      # Get any existing node with the same key
+      existing_key = doc.xpath("//string[@name=\"#{item.key}\"]").first
+      if existing_key.nil?
+        # Add our new key
+        resources.add_child("\n  #{new_string.to_xml}")
+      else 
+        # Overwrite the original
+        existing_key.replace(new_string)
+      end
     end
     resources.add_child("\n")
-    puts doc
+    File.write(file, doc)
   end
 
   def get_strings_relative_path_from_locale(language, region)
