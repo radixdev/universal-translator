@@ -41,17 +41,20 @@ class AndroidStringsLayer < BaseLayer
 
       if File.file?(strings_file)
         puts "updating existing #{strings_file}"
-        update_existing_file(strings_file, lifs_by_code)
+        doc = File.open(strings_file) { |f| Nokogiri::XML(f) }
+        update_xml_document(strings_file, lifs_by_code, doc)
       else
         puts "creating new strings file #{strings_file}"
+        FileUtils.mkdir_p(File.expand_path("..", strings_file))
+        doc = Nokogiri::XML('<?xml version="1.0" encoding="utf-8"?><resources></resources>')
+        update_xml_document(strings_file, lifs_by_code, doc)
       end
     end
   end
 
   private
 
-  def update_existing_file(file, lifs)
-    doc = File.open(file) { |f| Nokogiri::XML(f) }
+  def update_xml_document(file, lifs, doc)
     resources = doc.at_css('resources')
 
     lifs.each do |item|
